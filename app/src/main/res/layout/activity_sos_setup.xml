@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="18dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter SOS WhatsApp Number (CountryCode+Number, no +)\nExample: 919876543210"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:id="@+id/edtSos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="9198xxxxxxx"
+        android:inputType="phone"
+        android:layout_marginTop="12dp"/>
+
+    <Button
+        android:id="@+id/btnSaveSos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="12dp"/>
+</LinearLayout>

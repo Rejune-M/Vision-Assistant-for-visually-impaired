@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionAssist Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        html, body, #map { height: 100%; margin: 0; padding: 0; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    let map = L.map('map').setView([8.181, 77.432], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19
+    }).addTo(map);
+
+    let userMarker = null;
+    let routeLine = null;
+    let obstacleLayer = L.layerGroup().addTo(map);
+
+    function setUserLocation(lat, lon) {
+      if (!userMarker) {
+        userMarker = L.marker([lat, lon]).addTo(map).bindPopup("You");
+        map.setView([lat, lon], 17);
+      } else {
+        userMarker.setLatLng([lat, lon]);
+      }
+    }
+
+    function drawRoute(points) {
+      if (routeLine) map.removeLayer(routeLine);
+      routeLine = L.polyline(points, { weight: 5 }).addTo(map);
+      map.fitBounds(routeLine.getBounds());
+    }
+
+    function clearRoute() {
+      if (routeLine) map.removeLayer(routeLine);
+      routeLine = null;
+    }
+
+    function clearObstacles() {
+      obstacleLayer.clearLayers();
+    }
+
+    function addObstacle(id, lat, lon, label) {
+      L.circleMarker([lat, lon], { radius: 7 }).addTo(obstacleLayer)
+        .bindPopup(label || "Obstacle");
+    }
+
+    window.setUserLocation = setUserLocation;
+    window.drawRoute = drawRoute;
+    window.clearRoute = clearRoute;
+    window.clearObstacles = clearObstacles;
+    window.addObstacle = addObstacle;
+</script>
+</body>
+</html>
